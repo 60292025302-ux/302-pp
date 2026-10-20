@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base reset ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+  color: #c8c8c8;
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3a0000; }
+
+/* ─── Glitch overlay layers ─── */
+.glitch-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.glitch-layer::before,
+.glitch-layer::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitch-layer::before {
+  color: #ff003366;
+  animation: glitch-shift-r 0.3s steps(1) infinite;
+}
+
+.glitch-layer::after {
+  color: #00ffff44;
+  animation: glitch-shift-l 0.3s steps(1) infinite;
+}
+
+@keyframes glitch-shift-r {
+  0%   { clip-path: inset(20% 0 60% 0); transform: translate(3px, 0); }
+  25%  { clip-path: inset(60% 0 10% 0); transform: translate(-3px, 0); }
+  50%  { clip-path: inset(40% 0 30% 0); transform: translate(2px, 0); }
+  75%  { clip-path: inset(80% 0 5% 0);  transform: translate(-2px, 0); }
+  100% { clip-path: inset(10% 0 70% 0); transform: translate(3px, 0); }
+}
+
+@keyframes glitch-shift-l {
+  0%   { clip-path: inset(50% 0 20% 0); transform: translate(-3px, 0); }
+  25%  { clip-path: inset(10% 0 70% 0); transform: translate(3px, 0); }
+  50%  { clip-path: inset(70% 0 5% 0);  transform: translate(-2px, 0); }
+  75%  { clip-path: inset(30% 0 45% 0); transform: translate(2px, 0); }
+  100% { clip-path: inset(5% 0 80% 0);  transform: translate(-3px, 0); }
+}
+
+/* ─── Scanline overlay ─── */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.18) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ─── Static noise ─── */
+.static-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: staticNoise 0.12s steps(1) infinite;
+}
+
+.static-noise.visible {
+  opacity: 1;
+}
+
+/* ─── Blood drip top border ─── */
+.blood-border {
+  position: relative;
+}
+
+.blood-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #8b0000 20%, #cc0000 50%, #8b0000 80%, transparent 100%);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 1.5s ease;
+}
+
+.blood-border.active::before {
+  transform: scaleX(1);
+}
+
+/* ─── Message bubble entrance ─── */
+.msg-enter {
+  animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Typing dots ─── */
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #555;
+  animation: bounce3 1.2s infinite;
+  display: inline-block;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce3 {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-6px); }
+}
+
+/* ─── Horror-phase dot colors ─── */
+.dot-horror { background: #8b0000 !important; }
+
+/* ─── Vignette darkening ─── */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 98;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0) 100%);
+  transition: background 2s ease;
+}
+
+.vignette.phase-1 {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 100%);
+}
+
+.vignette.phase-2 {
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(60,0,0,0.5) 100%);
+}
+
+.vignette.phase-3 {
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(80,0,0,0.75) 100%);
+}
+
+/* ─── Screen shake ─── */
+.screen-shake {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  10%  { transform: translate(-2px, -1px); }
+  20%  { transform: translate(2px, 1px); }
+  30%  { transform: translate(-1px, 2px); }
+  40%  { transform: translate(1px, -2px); }
+  50%  { transform: translate(-2px, 1px); }
+  60%  { transform: translate(2px, -1px); }
+  70%  { transform: translate(-1px, 1px); }
+  80%  { transform: translate(1px, 2px); }
+  90%  { transform: translate(-1px, -2px); }
+}
+
+/* ─── Red glow pulse on container ─── */
+.pulse-red {
+  animation: pulseRed 2s ease-in-out infinite;
+}
+
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 0px rgba(139,0,0,0); }
+  50%       { box-shadow: 0 0 40px rgba(139,0,0,0.4); }
+}
+
+/* ─── Invert flash ─── */
+.invert-flash {
+  animation: invertFlash 0.15s steps(1) 3;
+}
+
+@keyframes invertFlash {
+  0%, 100% { filter: invert(0); }
+  50%      { filter: invert(1) hue-rotate(180deg); }
+}
+
+/* ─── Corrupted text ─── */
+.corrupted {
+  font-family: monospace;
+  color: #cc0000 !important;
+  text-shadow: 0 0 8px #ff000066;
+  animation: glitch-text 0.3s steps(1) infinite;
+}
+
+@keyframes glitch-text {
+  0%   { letter-spacing: 0px; }
+  25%  { letter-spacing: 2px; opacity: 0.8; }
+  50%  { letter-spacing: -1px; }
+  75%  { letter-spacing: 3px; opacity: 0.6; }
+  100% { letter-spacing: 0px; }
+}
+
+/* ─── Final phase: red border flash ─── */
+.final-border {
+  box-shadow: inset 0 0 0 2px #8b0000;
+  animation: borderFlash 1s ease-in-out infinite;
+}
+
+@keyframes borderFlash {
+  0%, 100% { box-shadow: inset 0 0 0 2px #8b000044; }
+  50%      { box-shadow: inset 0 0 0 3px #cc0000cc; }
+}

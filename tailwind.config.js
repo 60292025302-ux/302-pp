@@ -1,0 +1,95 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        horror: {
+          bg: '#0a0a0a',
+          surface: '#111111',
+          border: '#1a1a1a',
+          red: '#8b0000',
+          'red-bright': '#cc0000',
+          'red-glow': '#ff000033',
+          text: '#c8c8c8',
+          'text-dim': '#666666',
+          'ai-bubble': '#1c1c1c',
+          'user-bubble': '#1a2a1a',
+        },
+      },
+      keyframes: {
+        bounce3: {
+          '0%, 60%, 100%': { transform: 'translateY(0)' },
+          '30%': { transform: 'translateY(-6px)' },
+        },
+        glitch: {
+          '0%':   { transform: 'translate(0)', clipPath: 'inset(0 0 100% 0)' },
+          '10%':  { transform: 'translate(-3px, 1px)', clipPath: 'inset(10% 0 60% 0)' },
+          '20%':  { transform: 'translate(3px, -1px)', clipPath: 'inset(40% 0 30% 0)' },
+          '30%':  { transform: 'translate(-1px, 2px)', clipPath: 'inset(70% 0 5% 0)' },
+          '40%':  { transform: 'translate(2px, -2px)', clipPath: 'inset(20% 0 55% 0)' },
+          '50%':  { transform: 'translate(-2px, 0)',   clipPath: 'inset(50% 0 20% 0)' },
+          '60%':  { transform: 'translate(1px, 1px)',  clipPath: 'inset(80% 0 2% 0)' },
+          '70%':  { transform: 'translate(-1px, -1px)',clipPath: 'inset(5% 0 80% 0)' },
+          '80%':  { transform: 'translate(3px, 1px)',  clipPath: 'inset(30% 0 45% 0)' },
+          '90%':  { transform: 'translate(-3px, -1px)',clipPath: 'inset(60% 0 15% 0)' },
+          '100%': { transform: 'translate(0)',         clipPath: 'inset(0 0 100% 0)' },
+        },
+        scanline: {
+          '0%':   { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '50%':      { opacity: '0.85' },
+          '52%':      { opacity: '1' },
+          '54%':      { opacity: '0.6' },
+          '56%':      { opacity: '1' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+          '10%': { transform: 'translate(-2px, -1px) rotate(-0.5deg)' },
+          '20%': { transform: 'translate(2px, 1px) rotate(0.5deg)' },
+          '30%': { transform: 'translate(-1px, 2px) rotate(0deg)' },
+          '40%': { transform: 'translate(1px, -2px) rotate(0.5deg)' },
+          '50%': { transform: 'translate(-2px, 1px) rotate(-0.5deg)' },
+          '60%': { transform: 'translate(2px, -1px) rotate(0deg)' },
+          '70%': { transform: 'translate(-1px, 1px) rotate(-0.5deg)' },
+          '80%': { transform: 'translate(1px, 2px) rotate(0.5deg)' },
+          '90%': { transform: 'translate(-1px, -2px) rotate(0deg)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        bloodDrip: {
+          '0%':   { transform: 'scaleY(0)', transformOrigin: 'top' },
+          '100%': { transform: 'scaleY(1)', transformOrigin: 'top' },
+        },
+        pulseRed: {
+          '0%, 100%': { boxShadow: '0 0 0px #8b000000' },
+          '50%':      { boxShadow: '0 0 30px #8b000066' },
+        },
+        staticNoise: {
+          '0%':   { backgroundPosition: '0% 0%' },
+          '25%':  { backgroundPosition: '50% 50%' },
+          '50%':  { backgroundPosition: '100% 0%' },
+          '75%':  { backgroundPosition: '0% 100%' },
+          '100%': { backgroundPosition: '50% 50%' },
+        },
+      },
+      animation: {
+        bounce3: 'bounce3 1.2s infinite',
+        glitch: 'glitch 0.4s steps(1) infinite',
+        scanline: 'scanline 4s linear infinite',
+        flicker: 'flicker 3s infinite',
+        shake: 'shake 0.5s infinite',
+        fadeIn: 'fadeIn 0.35s ease-out',
+        bloodDrip: 'bloodDrip 0.8s ease-out forwards',
+        pulseRed: 'pulseRed 2s ease-in-out infinite',
+        staticNoise: 'staticNoise 0.15s steps(1) infinite',
+      },
+    },
+  },
+  plugins: [],
+}
